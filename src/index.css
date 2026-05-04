@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background-color: #FFFFFF;
+  color: #424B54;
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', 'DM Sans', sans-serif;
+}
+
+@layer base {
+  body {
+    @apply antialiased text-primary bg-background;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-8 py-4 bg-accent-primary text-primary font-semibold rounded-large transition-all duration-300 hover:bg-accent-secondary hover:text-white shadow-soft hover:shadow-md;
+  }
+  
+  .card {
+    @apply bg-secondary/10 border border-secondary/20 rounded-large p-6 shadow-soft;
+  }
+}
+
+/* Custom Wheel Animation */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.wheel-spinning {
+  transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1);
+}
