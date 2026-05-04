@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-const Timer = ({ onComplete, autoStart = false }) => {
+const Timer = ({ onComplete, onStart, autoStart = false }) => {
   const [timeLeft, setTimeLeft] = useState(60);
   const [duration, setDuration] = useState(60);
   const [isActive, setIsActive] = useState(autoStart);
   const presets = [60, 180, 300];
-
 
   useEffect(() => {
     let interval = null;
@@ -21,7 +20,11 @@ const Timer = ({ onComplete, autoStart = false }) => {
     return () => clearInterval(interval);
   }, [isActive, timeLeft, onComplete]);
 
-  const toggleTimer = () => setIsActive(!isActive);
+  const toggleTimer = () => {
+    const nextActive = !isActive;
+    setIsActive(nextActive);
+    if (nextActive && onStart) onStart();
+  };
   
   const resetTimer = useCallback((newDuration = duration) => {
     setTimeLeft(newDuration);
@@ -37,7 +40,7 @@ const Timer = ({ onComplete, autoStart = false }) => {
   const strokeDashoffset = circumference - (timeLeft / duration) * circumference;
 
   return (
-    <div className="flex flex-col items-center gap-6 p-8 bg-white/50 backdrop-blur-sm rounded-large shadow-soft border border-secondary/10">
+    <div className="flex flex-col items-center gap-6 p-8 bg-white/50 backdrop-blur-sm rounded-large shadow-soft border border-secondary/10 w-full">
       <div className="flex gap-4">
         {presets.map((preset) => (
           <button
@@ -49,7 +52,7 @@ const Timer = ({ onComplete, autoStart = false }) => {
                 : 'bg-transparent border-secondary/30 text-secondary hover:border-accent-primary'
             }`}
           >
-            {preset}s
+            {preset / 60}m
           </button>
         ))}
       </div>
@@ -87,22 +90,22 @@ const Timer = ({ onComplete, autoStart = false }) => {
         </div>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex flex-col w-full gap-4">
         <button
           onClick={toggleTimer}
-          className={`px-8 py-2 rounded-full font-semibold transition-all ${
+          className={`w-full py-4 rounded-full font-bold transition-all shadow-soft active:scale-95 ${
             isActive 
               ? 'bg-primary text-white hover:bg-primary/90' 
               : 'bg-accent-primary text-primary hover:bg-accent-secondary hover:text-white'
           }`}
         >
-          {isActive ? 'Pause' : 'Start Timer'}
+          {isActive ? 'Pause Session' : 'Start Practice'}
         </button>
         <button
           onClick={() => resetTimer()}
-          className="px-8 py-2 rounded-full border-2 border-secondary/20 text-secondary font-semibold hover:border-secondary/40 transition-all"
+          className="w-full py-3 rounded-full border-2 border-secondary/20 text-secondary font-semibold hover:border-secondary/40 transition-all text-sm"
         >
-          Reset
+          Reset Session
         </button>
       </div>
     </div>
