@@ -4,9 +4,8 @@ const Timer = ({ onComplete, autoStart = false }) => {
   const [timeLeft, setTimeLeft] = useState(60);
   const [duration, setDuration] = useState(60);
   const [isActive, setIsActive] = useState(autoStart);
+  const presets = [60, 180, 300];
 
-  
-  const presets = [30, 60, 120];
 
   useEffect(() => {
     let interval = null;

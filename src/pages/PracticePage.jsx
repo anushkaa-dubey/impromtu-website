@@ -52,49 +52,43 @@ const PracticePage = () => {
           }} 
         />
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center mt-12 bg-white p-8 md:p-12 rounded-large shadow-soft border border-secondary/10">
-          <div className="flex flex-col items-center">
+        <div className="grid lg:grid-cols-12 gap-8 items-stretch mt-12 bg-white/80 backdrop-blur-md p-6 md:p-10 rounded-large shadow-soft border border-secondary/10">
+          <div className="lg:col-span-7 flex flex-col items-center justify-center bg-background/50 rounded-medium p-8 border border-secondary/5">
              <Wheel topics={currentTopics} onSpinEnd={handleSpinEnd} />
              {selectedTopic && (
                <motion.div 
-                 initial={{ opacity: 0, y: 10 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 className="mt-4 text-center"
+                 initial={{ opacity: 0, scale: 0.95 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 className="mt-6 text-center bg-white px-8 py-3 rounded-full shadow-sm border border-accent-primary/20"
                >
-                 <span className="text-sm font-bold text-accent-secondary uppercase tracking-widest">Selected Topic</span>
-                 <p className="text-xl font-bold text-primary mt-1 px-4">"{selectedTopic}"</p>
+                 <span className="text-[10px] font-bold text-accent-secondary uppercase tracking-[0.2em] block mb-1">Current Topic</span>
+                 <p className="text-xl font-bold text-primary italic leading-tight">"{selectedTopic}"</p>
                </motion.div>
              )}
           </div>
 
-
-          <div className="flex flex-col items-center justify-center min-h-[400px]">
+          <div className="lg:col-span-5 flex flex-col items-center justify-center bg-primary/5 rounded-medium p-8 border border-primary/10 min-h-[500px]">
              <AnimatePresence mode="wait">
                 {selectedTopic ? (
                   <motion.div
                     key="results"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
                     className="flex flex-col items-center text-center w-full"
                   >
-                    <div className="mb-6 p-4 bg-accent-primary/20 rounded-full">
-                       <Trophy className="text-accent-secondary" size={40} />
+                    <div className="mb-8 p-4 bg-accent-primary/20 rounded-full ring-8 ring-accent-primary/5">
+                       <Trophy className="text-accent-secondary" size={48} />
                     </div>
-                    <h3 className="text-sm font-bold uppercase tracking-widest text-accent-secondary mb-2">Your Topic</h3>
-                    <p className="text-2xl font-bold text-primary mb-8 leading-tight italic">
-                      "{selectedTopic}"
-                    </p>
                     
-                    <Timer autoStart={true} onComplete={() => console.log('Speech finished')} />
-
+                    <Timer autoStart={false} onComplete={() => console.log('Speech finished')} />
                     
                     <button 
                       onClick={handleReset}
-                      className="mt-8 flex items-center gap-2 text-secondary hover:text-primary transition-colors text-sm font-semibold"
+                      className="mt-10 flex items-center gap-2 text-secondary hover:text-accent-secondary transition-colors text-sm font-bold uppercase tracking-widest"
                     >
                       <RefreshCcw size={16} />
-                      Pick another topic
+                      Choose New Category
                     </button>
                   </motion.div>
                 ) : (
@@ -104,18 +98,19 @@ const PracticePage = () => {
                     animate={{ opacity: 1 }}
                     className="text-center"
                   >
-                    <div className="w-20 h-20 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                       <RefreshCcw className="text-secondary/40 animate-pulse" size={32} />
+                    <div className="w-24 h-24 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-dashed border-secondary/20">
+                       <RefreshCcw className="text-secondary/30 animate-spin-slow" size={40} />
                     </div>
-                    <h3 className="text-xl font-bold text-secondary/60">Ready when you are</h3>
-                    <p className="text-secondary/40 text-sm max-w-[200px] mx-auto mt-2">
-                       Spin the wheel on the left to reveal your challenge.
+                    <h3 className="text-2xl font-bold text-primary/40">Practice Station</h3>
+                    <p className="text-secondary/50 text-sm max-w-[240px] mx-auto mt-4 leading-relaxed">
+                       Spin the wheel to reveal your next challenge and start your session.
                     </p>
                   </motion.div>
                 )}
              </AnimatePresence>
           </div>
         </div>
+
       </main>
 
       <Footer />

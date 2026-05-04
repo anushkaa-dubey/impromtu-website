@@ -14,6 +14,8 @@ const Navbar = () => {
         <Link to="/" className="hover:text-accent-primary transition-colors">Home</Link>
         <a href="#about" className="hover:text-accent-primary transition-colors">About</a>
         <a href="#how-it-works" className="hover:text-accent-primary transition-colors">How it Works</a>
+        <a href="#contact" className="hover:text-accent-primary transition-colors">Contact</a>
+
         <Link 
           to="/practice" 
           className="bg-accent-primary text-primary px-6 py-2 rounded-full hover:bg-accent-secondary hover:text-white transition-all duration-300 shadow-sm"
