@@ -15,11 +15,12 @@ const PracticePage = () => {
 
   const currentTopics = useMemo(() => {
     if (activeCategory === 'Random') {
-      const allTopics = Object.values(TOPICS).flat();
-      return allTopics.sort(() => 0.5 - Math.random()).slice(0, 8);
+      // Merge all topics from all categories
+      return Object.values(TOPICS).flat();
     }
-    return (TOPICS[activeCategory] || []).slice(0, 8);
+    return TOPICS[activeCategory] || [];
   }, [activeCategory]);
+
 
   const handleSpinEnd = (topic) => {
     setSelectedTopic(topic);
@@ -54,7 +55,18 @@ const PracticePage = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center mt-12 bg-white p-8 md:p-12 rounded-large shadow-soft border border-secondary/10">
           <div className="flex flex-col items-center">
              <Wheel topics={currentTopics} onSpinEnd={handleSpinEnd} />
+             {selectedTopic && (
+               <motion.div 
+                 initial={{ opacity: 0, y: 10 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 className="mt-4 text-center"
+               >
+                 <span className="text-sm font-bold text-accent-secondary uppercase tracking-widest">Selected Topic</span>
+                 <p className="text-xl font-bold text-primary mt-1 px-4">"{selectedTopic}"</p>
+               </motion.div>
+             )}
           </div>
+
 
           <div className="flex flex-col items-center justify-center min-h-[400px]">
              <AnimatePresence mode="wait">
@@ -74,7 +86,8 @@ const PracticePage = () => {
                       "{selectedTopic}"
                     </p>
                     
-                    <Timer onComplete={() => console.log('Speech finished')} />
+                    <Timer autoStart={true} onComplete={() => console.log('Speech finished')} />
+
                     
                     <button 
                       onClick={handleReset}

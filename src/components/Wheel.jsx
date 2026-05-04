@@ -47,14 +47,26 @@ const Wheel = ({ topics, onSpinEnd }) => {
         <motion.div
           animate={controls}
           initial={{ rotate: 0 }}
-          className="w-full h-full rounded-full border-8 border-primary/10 shadow-xl overflow-hidden bg-white"
+          className="w-full h-full rounded-full border-[12px] border-primary/5 shadow-2xl overflow-hidden bg-white relative"
         >
           <svg viewBox="0 0 100 100" className="w-full h-full">
+            <defs>
+              <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="1" />
+                <feOffset dx="0" dy="1" result="offsetblur" />
+                <feComponentTransfer>
+                  <feFuncA type="linear" slope="0.3" />
+                </feComponentTransfer>
+                <feMerge>
+                  <feMergeNode />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
             {topics.map((topic, i) => {
               const startAngle = i * segmentAngle;
               const endAngle = (i + 1) * segmentAngle;
               
-              // Simple pie slice using SVG path
               const x1 = 50 + 50 * Math.cos((Math.PI * (startAngle - 90)) / 180);
               const y1 = 50 + 50 * Math.sin((Math.PI * (startAngle - 90)) / 180);
               const x2 = 50 + 50 * Math.cos((Math.PI * (endAngle - 90)) / 180);
@@ -62,33 +74,42 @@ const Wheel = ({ topics, onSpinEnd }) => {
               
               const largeArc = segmentAngle > 180 ? 1 : 0;
               
+              // Map colors from our palette
+              const colors = ['#93A8AC', '#E2B4BD', '#424B54', '#9B6A6C'];
+              const fillColor = colors[i % colors.length];
+              const textColor = (fillColor === '#424B54' || fillColor === '#9B6A6C') ? '#FFFFFF' : '#424B54';
+              
               return (
                 <g key={i}>
                   <path
                     d={`M 50 50 L ${x1} ${y1} A 50 50 0 ${largeArc} 1 ${x2} ${y2} Z`}
-                    fill={i % 2 === 0 ? '#93A8AC' : '#E2B4BD'}
+                    fill={fillColor}
                     stroke="white"
-                    strokeWidth="0.5"
+                    strokeWidth="0.8"
                   />
-                  <text
-                    x="50"
-                    y="25"
-                    transform={`rotate(${startAngle + segmentAngle / 2} 50 50)`}
-                    fill={i % 2 === 0 ? '#FFFFFF' : '#424B54'}
-                    fontSize="3"
-                    fontWeight="bold"
-                    textAnchor="middle"
-                    className="pointer-events-none uppercase tracking-widest"
-                  >
-                    Topic {i + 1}
-                  </text>
+                  <g transform={`rotate(${startAngle + segmentAngle / 2} 50 50)`}>
+                    <text
+                      x="50"
+                      y="15"
+                      fill={textColor}
+                      fontSize={numSegments > 20 ? "1.5" : numSegments > 10 ? "2.2" : "2.8"}
+                      fontWeight="700"
+                      textAnchor="middle"
+                      className="pointer-events-none uppercase tracking-[0.1em]"
+                    >
+                      {i + 1}
+                    </text>
+                  </g>
                 </g>
               );
             })}
-            <circle cx="50" cy="50" r="8" fill="#424B54" />
-            <circle cx="50" cy="50" r="4" fill="#E2B4BD" />
+            {/* Center cap */}
+            <circle cx="50" cy="50" r="10" fill="#FFFFFF" filter="url(#shadow)" />
+            <circle cx="50" cy="50" r="6" fill="#424B54" />
+            <circle cx="50" cy="50" r="2.5" fill="#E2B4BD" />
           </svg>
         </motion.div>
+
       </div>
 
       <button

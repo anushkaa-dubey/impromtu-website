@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-const Timer = ({ onComplete }) => {
+const Timer = ({ onComplete, autoStart = false }) => {
   const [timeLeft, setTimeLeft] = useState(60);
   const [duration, setDuration] = useState(60);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(autoStart);
+
   
   const presets = [30, 60, 120];
 

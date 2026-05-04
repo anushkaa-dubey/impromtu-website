@@ -1,20 +1,30 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  background-color: #FFFFFF;
-  color: #424B54;
-  font-family: 'Inter', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', 'DM Sans', sans-serif;
+@theme {
+  --color-primary: #424B54;
+  --color-secondary: #93A8AC;
+  --color-background: #FFFFFF;
+  --color-accent-primary: #E2B4BD;
+  --color-accent-secondary: #9B6A6C;
+
+  --font-heading: "Poppins", "DM Sans", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --radius-large: 24px;
+  --radius-medium: 16px;
+
+  --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
 }
 
 @layer base {
   body {
-    @apply antialiased text-primary bg-background;
+    @apply antialiased text-primary bg-background font-body;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
   }
 }
 
@@ -37,3 +47,4 @@ h1, h2, h3, h4, h5, h6 {
 .wheel-spinning {
   transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1);
 }
+

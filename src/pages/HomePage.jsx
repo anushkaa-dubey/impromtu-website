@@ -39,7 +39,14 @@ const HomePage = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-6 bg-secondary/5">
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        id="about" 
+        className="py-20 px-6 bg-secondary/5"
+      >
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
             <span className="text-accent-secondary font-bold tracking-widest uppercase text-sm">About Impromptu</span>
@@ -57,19 +64,22 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          <div className="bg-white p-2 rounded-large shadow-xl transform rotate-2">
+          <motion.div 
+            whileHover={{ rotate: 0, scale: 1.02 }}
+            className="bg-white p-2 rounded-large shadow-xl transform rotate-2 transition-transform duration-500"
+          >
             <div className="bg-secondary/20 rounded-[inherit] overflow-hidden">
                <div className="p-12 text-center">
                   <div className="w-16 h-16 bg-accent-primary rounded-full mx-auto mb-6 flex items-center justify-center">
                     <Zap size={32} className="text-primary" />
                   </div>
                   <h3 className="text-2xl font-bold text-primary mb-2">Confidence is Key</h3>
-                  <p className="text-secondary">"The secret of success in life is to be ready for your opportunity when it comes."</p>
+                  <p className="text-secondary italic">"The secret of success in life is to be ready for your opportunity when it comes."</p>
                </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* How it Works */}
       <section id="how-it-works" className="py-20 px-6">
@@ -97,13 +107,20 @@ const HomePage = () => {
                 desc: "Articulate your thoughts within the set time limits and track your progress." 
               }
             ].map((step, i) => (
-              <div key={i} className="flex flex-col items-center text-center p-8 rounded-large bg-white border border-secondary/10 shadow-soft hover:shadow-md transition-shadow">
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.2 }}
+                className="flex flex-col items-center text-center p-8 rounded-large bg-white border border-secondary/10 shadow-soft hover:shadow-md transition-shadow"
+              >
                 <div className="mb-6 p-4 rounded-full bg-background ring-8 ring-secondary/5">
                   {step.icon}
                 </div>
                 <h3 className="text-xl font-bold text-primary mb-3">{step.title}</h3>
                 <p className="text-secondary">{step.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -127,24 +144,37 @@ const HomePage = () => {
                   { icon: <TrendingUp size={20} />, text: "Reduce filler words and 'um's' in your speech." },
                   { icon: <TrendingUp size={20} />, text: "Sharpen your logical reasoning and quick thinking." }
                 ].map((item, i) => (
-                  <li key={i} className="flex gap-4 items-center">
+                  <motion.li 
+                    key={i} 
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex gap-4 items-center"
+                  >
                     <span className="p-1 px-2 bg-accent-primary/20 rounded text-accent-primary">{item.icon}</span>
                     <span className="text-lg opacity-90">{item.text}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
            </div>
            <div className="flex justify-center">
-              <div className="relative">
+              <motion.div 
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                className="relative"
+              >
                 <div className="absolute -inset-4 bg-accent-primary/20 blur-2xl rounded-full"></div>
                 <div className="relative bg-white/10 backdrop-blur-md p-10 rounded-large border border-white/20 text-center">
                    <div className="text-5xl font-bold mb-4">10,000+</div>
                    <div className="text-accent-primary font-bold uppercase tracking-widest text-sm">Practiced Sessions</div>
                 </div>
-              </div>
+              </motion.div>
            </div>
         </div>
       </section>
+
 
       <Footer />
     </div>
